@@ -1,8 +1,8 @@
 # yarn-plugins
 
-![Build](https://github.com/crushjz/yarn-plugins/workflows/main/badge.svg)
+[![Build](https://github.com/crushjz/yarn-plugins/actions/workflows/main.yml/badge.svg)](https://github.com/crushjz/yarn-plugins/actions/workflows/main.yml)
 
-Yarn plugins for Yarn 2.
+Yarn plugins for Yarn 2+.
 
 ## Plugins
 

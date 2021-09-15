@@ -1,11 +1,11 @@
-# `@retorio/yarn-plugin-dependency
+# workspace-changed
 
 Custom Yarn 3+ plugin to execute commands only on workspaces with git changes.
 
 ## Usage
 
 ```
-yarn run-on-changes ... <commandName>
+yarn workspaces foreach changed ... <commandName>
 ```
 
 ## Examples
@@ -13,7 +13,7 @@ yarn run-on-changes ... <commandName>
 Run the `lint` command only on workspaces that has git changes between the current branch and the `dev` branch:
 
 ```
-yarn run-on-changes --commit-target dev lint
+yarn workspaces foreach changed --commit dev lint
 ```
 
 ## Options
@@ -31,7 +31,7 @@ yarn run-on-changes --commit-target dev lint
 The command name has to be written last because the plugin can forward arguments to it:
 
 ```
-yarn run-on-changes --commit-target dev lint --max-warnings=0
+yarn workspaces foreach changed --commit dev lint --max-warnings=0
 ```
 
 ## Development
@@ -39,5 +39,5 @@ yarn run-on-changes --commit-target dev lint --max-warnings=0
 Build the plugin in watch mode and copy it to the `.yarn/plugins` folder:
 
 ```
-yarn workspace @retorio/yarn-plugin-dependency dev
+yarn workspace @crushjz/yarn-plugin-workspace-changed dev
 ```
