@@ -1,0 +1,3 @@
+# Used for Windows users that have `core.autocrlf` set to `true`
+* text=auto eol=lf
+
