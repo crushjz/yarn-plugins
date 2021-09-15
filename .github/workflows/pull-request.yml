@@ -26,11 +26,11 @@ jobs:
           CI: true
 
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
-          path:
-            - node_modules
-            - packages/*/node_modules
+          path: |
+            node_modules
+            packages/*/node_modules
           key: node_modules-${{ matrix.node-version }}-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
