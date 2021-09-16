@@ -5,6 +5,7 @@ import {
   Workspace,
 } from '@yarnpkg/core'
 import { PortablePath } from '@yarnpkg/fslib'
+import { isMatch } from 'micromatch'
 import any from 'ramda/es/any'
 
 export const getWorkspaceFullName = (w: Workspace): string =>
@@ -79,4 +80,51 @@ export const getPrefix = (
   const prefix = `[${name}]:`
   const color = colors[commandIndex % colors.length] || colors[0]
   return formatUtils.pretty(configuration, prefix, color)
+}
+
+export const isWorkspaceFile = (workspace: Workspace, filePath: string) =>
+  isMatch(filePath, `${workspace.relativeCwd}/**/*`)
+
+export const isWorkspaceChanged = (
+  { workspace, dependencies }: WorkspaceWithDependencies,
+  filesPaths: Array<string>
+) =>
+  any(
+    w =>
+      any(filePath => isMatch(filePath, `${w.relativeCwd}/**/*`), filesPaths),
+    [workspace, ...dependencies]
+  )
+
+enum ChangedReason {
+  FILE_CHANGE = 'file-change',
+  DEPENDENCY_CHANGE = 'dependency-change',
+}
+
+export const getWorkspaceChangedReasons = (
+  workspace: Workspace,
+  filesPaths: Array<string>
+): Array<ChangedReason> => {
+  const dependencies = Array.from(workspace.getRecursiveWorkspaceDependencies())
+
+  const hasChangedDependencies = any(
+    dependency =>
+      any(filePath => isWorkspaceFile(dependency, filePath), filesPaths),
+    dependencies
+  )
+
+  const hasFileChanges = any(
+    filePath => isWorkspaceFile(workspace, filePath),
+    filesPaths
+  )
+
+  if (hasChangedDependencies && hasFileChanges) {
+    return [ChangedReason.DEPENDENCY_CHANGE, ChangedReason.FILE_CHANGE]
+  }
+  if (hasChangedDependencies) {
+    return [ChangedReason.DEPENDENCY_CHANGE]
+  }
+  if (hasFileChanges) {
+    return [ChangedReason.FILE_CHANGE]
+  }
+  return []
 }

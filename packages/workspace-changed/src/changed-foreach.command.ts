@@ -18,11 +18,11 @@ import {
   getWorkspaceFullName,
   getWorkspaceWithDependencies,
   isNotNil,
+  isWorkspaceChanged,
 } from '@crushjz/common-utils'
 import { isMatch } from 'micromatch'
 import { cpus } from 'os'
 import pLimit from 'p-limit'
-import any from 'ramda/es/any'
 import isEmpty from 'ramda/es/isEmpty'
 import { Writable } from 'stream'
 import * as t from 'typanion'
@@ -193,16 +193,7 @@ export class ChangedForeachCommand extends BaseCommand {
     const candidates = workspaces
       .filter(workspace => workspace.manifest.scripts.has(this.scriptName))
       .map(getWorkspaceWithDependencies)
-      .filter(({ workspace, dependencies }) =>
-        any(
-          w =>
-            any(
-              filePath => isMatch(filePath, `${w.relativeCwd}/**/*`),
-              filesChanged
-            ),
-          [workspace, ...dependencies]
-        )
-      )
+      .filter(wd => isWorkspaceChanged(wd, filesChanged))
       .map(({ workspace }) => workspace)
       .filter(workspace =>
         isEmpty(this.include)
