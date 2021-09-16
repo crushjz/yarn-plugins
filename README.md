@@ -1,6 +1,6 @@
 # yarn-plugins
 
-[![Build](https://github.com/crushjz/yarn-plugins/actions/workflows/main.yml/badge.svg)](https://github.com/crushjz/yarn-plugins/actions/workflows/main.yml)
+[![GitHub release](https://img.shields.io/github/release/crushjz/yarn-plugins.svg)](https://github.com/crushjz/yarn-plugins/releases) [![Build](https://github.com/crushjz/yarn-plugins/actions/workflows/main.yml/badge.svg)](https://github.com/crushjz/yarn-plugins/actions/workflows/main.yml)
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
