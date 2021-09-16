@@ -14,6 +14,7 @@ import { Option } from 'clipanion'
 import { MiniCli } from 'clipanion/lib/advanced/Cli'
 import {
   getFilesChanged,
+  getPrefix,
   getWorkspaceFullName,
   getWorkspaceWithDependencies,
   isNotNil,
@@ -25,23 +26,6 @@ import any from 'ramda/es/any'
 import isEmpty from 'ramda/es/isEmpty'
 import { Writable } from 'stream'
 import * as t from 'typanion'
-
-const colors = [`#2E86AB`, `#A23B72`, `#F18F01`, `#C73E1D`, `#CCE2A3`] as const
-
-type GetPrefixOptions = {
-  readonly configuration: Configuration
-  readonly commandIndex: number
-}
-const getPrefix = (
-  workspace: Workspace,
-  { configuration, commandIndex }: GetPrefixOptions
-) => {
-  const ident = structUtils.convertToIdent(workspace.locator)
-  const name = structUtils.stringifyIdent(ident)
-  const prefix = `[${name}]:`
-  const color = colors[commandIndex % colors.length] || colors[0]
-  return formatUtils.pretty(configuration, prefix, color)
-}
 
 const createStream = (
   report: Report,
@@ -150,11 +134,12 @@ const runCommand = async (
   }
 }
 
-export class Changed extends BaseCommand {
-  static readonly paths = [['workspaces', 'foreach', 'changed']]
+export class ChangedForeachCommand extends BaseCommand {
+  static readonly paths = [['workspaces', 'changed', 'foreach']]
 
   readonly commit = Option.String('-c,--commit', {
-    description: 'Git revision patterns: eg  `<commit>`, `<commit>..<commit>`',
+    description:
+      'Git commit, branch or range to be used as revision for the diff',
     validator: t.isString(),
   })
 

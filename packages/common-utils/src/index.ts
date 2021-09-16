@@ -1,3 +1,3 @@
 export * from './git'
-export * from './workspaces'
+export * from './yarn-workspaces'
 export * from './type'

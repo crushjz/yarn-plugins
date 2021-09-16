@@ -1,9 +1,9 @@
 import { Plugin } from '@yarnpkg/core'
-import { Changed } from './changed.command'
+import { ChangedForeachCommand } from './changed-foreach.command'
 
 const plugin: Plugin = {
   hooks: {},
-  commands: [Changed],
+  commands: [ChangedForeachCommand],
 }
 
 export default plugin

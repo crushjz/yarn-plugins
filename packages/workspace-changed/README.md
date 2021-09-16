@@ -13,7 +13,7 @@ yarn plugin import https://github.com/crushjz/yarn-plugins/releases/latest/downl
 ## Usage
 
 ```
-yarn workspaces foreach changed ... <commandName>
+yarn workspaces changed foreach ... <commandName>
 ```
 
 ## Examples
@@ -21,14 +21,14 @@ yarn workspaces foreach changed ... <commandName>
 Run the `lint` command only on workspaces that has git changes between the current branch and the `dev` branch:
 
 ```
-yarn workspaces foreach changed --commit dev lint
+yarn workspaces changed foreach --commit dev lint
 ```
 
 ## Options
 
 | Definition    | Description                                                                 |
 | ------------- | --------------------------------------------------------------------------- |
-| -c,--commit   | Git commit/branch to be used as revision for the diff                       |
+| -c,--commit   | Git commit, branch or range to be used as revision for the diff             |
 | -p,--parallel | Run the commands in parallel                                                |
 | -j,--jobs #0  | The maximum number of parallel tasks that the execution will be limited to  |
 | --include #0  | An array of glob pattern idents; only matching workspaces will be traversed |
@@ -39,14 +39,16 @@ yarn workspaces foreach changed --commit dev lint
 The command name has to be written last because the plugin can forward arguments to it:
 
 ```
-yarn workspaces foreach changed --commit dev lint --max-warnings=0
+yarn workspaces changed foreach --commit dev lint --max-warnings=0
 ```
 
-Under the hood it will use [git diff](https://git-scm.com/docs/git-diff) to retrieve the list of changed files:
+Under the hood it uses [git diff](https://git-scm.com/docs/git-diff) to retrieve the list of changed files:
 
 ```
 git --no-pager diff --name-only <commit>
 ```
+
+`<commit>` can be any git branch, commit or range (eg `branch-1...branch-2`)
 
 ## Development
 

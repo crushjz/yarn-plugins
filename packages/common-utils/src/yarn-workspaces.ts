@@ -1,4 +1,9 @@
-import { Workspace } from '@yarnpkg/core'
+import {
+  Configuration,
+  formatUtils,
+  structUtils,
+  Workspace,
+} from '@yarnpkg/core'
 import { PortablePath } from '@yarnpkg/fslib'
 import any from 'ramda/es/any'
 
@@ -58,3 +63,20 @@ export const findWorkspaceByFullName = (
   fullName: string,
   workspaces: Array<Workspace>
 ) => workspaces.find(w => getWorkspaceFullName(w) === fullName)
+
+const colors = [`#2E86AB`, `#A23B72`, `#F18F01`, `#C73E1D`, `#CCE2A3`] as const
+
+type GetPrefixOptions = {
+  readonly configuration: Configuration
+  readonly commandIndex: number
+}
+export const getPrefix = (
+  workspace: Workspace,
+  { configuration, commandIndex }: GetPrefixOptions
+) => {
+  const ident = structUtils.convertToIdent(workspace.locator)
+  const name = structUtils.stringifyIdent(ident)
+  const prefix = `[${name}]:`
+  const color = colors[commandIndex % colors.length] || colors[0]
+  return formatUtils.pretty(configuration, prefix, color)
+}
