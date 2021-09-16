@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build and publish
 
     runs-on: ubuntu-latest
 
@@ -45,8 +45,7 @@ jobs:
           name: bundles
           path: packages/*/bundles/**/*.js
 
-      # TODO
-      # - name: Publish
-      #   run: yarn semantic-release
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create GitHub release
+        run: yarn release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
