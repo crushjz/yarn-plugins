@@ -42,6 +42,12 @@ The command name has to be written last because the plugin can forward arguments
 yarn workspaces foreach changed --commit dev lint --max-warnings=0
 ```
 
+Under the hood it will use [git diff](https://git-scm.com/docs/git-diff) to retrieve the list of changed files:
+
+```
+git --no-pager diff --name-only <commit>
+```
+
 ## Development
 
 Build the plugin in watch mode and copy it to the `.yarn/plugins` folder:
