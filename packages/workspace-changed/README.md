@@ -7,7 +7,7 @@ Custom Yarn 3+ plugin to execute commands only on workspaces with git changes.
 Install the latest plugin:
 
 ```
-yarn plugin import https://github.com/crushjz/yarn-plugins/releases/download/v0.0.1/plugin-workspace-changed.js
+yarn plugin import https://github.com/crushjz/yarn-plugins/releases/latest/download/plugin-workspace-changed.js
 ```
 
 ## Usage
