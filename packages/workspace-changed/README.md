@@ -56,7 +56,7 @@ git --no-pager diff --name-only <commit>
 
 Returns a list of workspaces that changed.
 
-If the `--json` option is set, it also returns the reasons each workspace is marked as changed. Currently there are two reasons:
+If the `--json` option is set, it also returns the reasons why each workspace is marked as changed. Currently there are two reasons:
 
 - `file-changed`: if the `git diff` returned at least one file that matched the workspace path
 - `dependency-changed`: if one of the workspace dependency has changed (by either a file change or a dependency change)
@@ -94,3 +94,16 @@ Build the plugin in watch mode and copy it to the `.yarn/plugins` folder:
 ```
 yarn workspace @crushjz/yarn-plugin-workspace-changed dev
 ```
+
+# Inspiration
+
+Thanks @Dcard for the inspiration (https://github.com/Dcard/yarn-plugins/tree/master/packages/changed)
+
+My plugin differs a little bit it in a few things:
+
+- no other plugins dependencies
+- you can send arguments to the command you want to run
+- it's under the "workspaces" namespace so (IMHO) it's easier to remember/use
+- the "changed list" command also return the reason of the change
+
+Hopefully we will have this feature in the official [`workspace-tools`](https://github.com/yarnpkg/berry/tree/master/packages/plugin-workspace-tools) plugin: https://github.com/yarnpkg/berry/issues/2374
